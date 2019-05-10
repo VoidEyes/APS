@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">APS</string>
+    <string name="Usuario">Usuario</string>
+    <string name="Senha">Senha</string>
+    <string name="Entrar">Entrar</string>
+    <string name="Cadastrar">Cadastro</string>
+    <string name="Salvar">Salvar</string>
+    <string name="novacompra">Nova Compra</string>
+    <string name="todascompras">Todas Compras</string>
+    <string name="comprasusu">Compras Usuario</string>
+</resources>
