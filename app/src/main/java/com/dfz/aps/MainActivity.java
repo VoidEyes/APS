@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.content.Intent;
 import android.widget.EditText;
+import android.widget.Toast;
+
 import com.dfz.aps.APSdb;
 
 public class MainActivity extends AppCompatActivity {
@@ -27,10 +29,13 @@ public class MainActivity extends AppCompatActivity {
         sen = senha.getText().toString();
         usuario.setName(nom);
         usuario.setSenha(sen);
-        if(aps.Entrar(usuario)==1){//page89
+        int entra = aps.Entrar(usuario);
+        entrar.putExtra("Nome",nom);
+        entrar.putExtra("Id",entra);
+        if(entra != 0){//page89
             startActivity(entrar);
         }else{
-            
+            Toast.makeText(this, "Algum dado esta errado.", Toast.LENGTH_SHORT).show();
         }
 
 
