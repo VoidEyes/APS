@@ -1,51 +1,61 @@
 package com.dfz.aps;
 
 import android.content.ContentValues;
+import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
+
 
 public class APSdb extends SQLiteOpenHelper{
 
     private static final String db_Name = "db";
     private static final int ver =1;
 
-    APSdb(Context context){
+    public APSdb(Context context){
+
         super(context, db_Name, null, ver);
     }
 
     @Override
-    public void onCreate(SQLiteDatabase db){
-        //Tabela Usuario
-        db.execSQL("CREATE TABLE Usuario ("+ "User_id INTEGER PRIMARY KEY AUTOINCREMENT, "+
-                "Name TEXT PRIMARY KEY,"+
-                "Senha TEXT);");
-        //Tabela Pedido
-        db.execSQL("CREATE TABLE Pedido("+ "Ped_id INTEGER PRIMARY KEY AUTOINCREMENT, "+
-                "Local TEXT,"+
-                "Custo REAL,"+
-                //"Data NUMERIC,"+
-                "FOREIGN KEY (User_id) REFERENCES Usuario(User_id));");
-        //Tabela Iten
-        db.execSQL("CREATE TABLE Iten ("+"Iten_id INTEGER PRIMARY KEY AUTOINCREMENT,"+
-                "Quantidade INTEGER,"+
-                "Valor REAL,"+
-                "Name TEXT,"+
-                "FOREIGN KEY (Ped_id) REFERENCES Pedido(Ped_id));");
+    public void onCreate(SQLiteDatabase db) {
+            //Tabela Usuario
+            String sql1 ="CREATE TABLE Usuario (User_id INTEGER PRIMARY KEY AUTOINCREMENT, Name TEXT  NOT NULL, Senha TEXT NOT NULL);";
+
+            //Tabela Pedido
+            String s1q2 ="CREATE TABLE Pedido(Ped_id INTEGER PRIMARY KEY AUTOINCREMENT,Local TEXT, Custo REAL, FOREIGN KEY (User_id) REFERENCES Usuario(User_id));";
+
+            //Tabela Iten
+            String sql3 ="CREATE TABLE Iten (Iten_id INTEGER PRIMARY KEY AUTOINCREMENT, uantidade INTEGER, Valor REAL, Name TEXT, FOREIGN KEY (Ped_id) REFERENCES Pedido(Ped_id));";
+
+            db.execSQL(sql1);
+            db.execSQL(s1q2);
+            db.execSQL(sql3);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int antigo, int novo){
+        String sql1 = "DROP TABLE IF EXISTS Usuarios";
+        String sql2= "DROP TABLE IF EXISTS Pedido";
+        String sql3= "DROP TABLE IF EXISTS Iten";
+        db.execSQL(sql1);
+        db.execSQL(sql2);
+        db.execSQL(sql3);
+        onCreate(db);
     }
 
     public void NovoUs(Usuario usuario){
-        SQLiteDatabase dc = getWritableDatabase();
+
         ContentValues usu = new ContentValues();
         usu.put("Name",usuario.getName());
         usu.put("Senha",usuario.getSenha());
-        dc.insert("Usuario",null, usu);
-        dc.close();
+        Salvar(usu);
+    }
+
+    private void Salvar(ContentValues usu){
+            SQLiteDatabase dc = getWritableDatabase();
+            dc.insert("Usuario", null, usu);
+            dc.close();
     }
 
     public int NovoPed(Pedido pedido){
@@ -74,26 +84,6 @@ public class APSdb extends SQLiteOpenHelper{
         de.close();
     }
 
-    public int Entrar (Usuario usuario){
-        SQLiteDatabase dr = getWritableDatabase();
-        String nome1, nome2, senha1, senha2;
-        int User_ide = 0;
-        nome1=usuario.getName();
-        senha1=usuario.getSenha();
-        Cursor cursor = dr.query("Usuario", new String[]{"Name","Senha","User_id"},"Name = ? and Senha = ?", new String[]{nome1, senha1}, null, null, null);
-        nome2 = cursor.getString(0);
-        senha2 = cursor.getString(1);
-        User_ide= cursor.getInt(0);
-        if(nome1 == nome2 && senha1==senha2){
-            cursor.close();
-            dr.close();
-            return User_ide;
-        }else {
-            cursor.close();
-            dr.close();
-            return 0;
-        }
-    }
 
 }
 

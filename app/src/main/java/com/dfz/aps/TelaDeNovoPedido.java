@@ -15,7 +15,7 @@ public class TelaDeNovoPedido extends AppCompatActivity {
         setContentView(R.layout.activity_tela_de_novo_pedido);
         Intent intent = getIntent();
         String nome = intent.getStringExtra("Nome");
-        int user_id = intent.getIntExtra("Nome",0);
+        int user_id = intent.getIntExtra("id",0);
         TextView NomeShow = (TextView)findViewById(R.id.nomeusu);
         TextView IdUsu = (TextView)findViewById(R.id.idusu);
         NomeShow.setText(nome);
