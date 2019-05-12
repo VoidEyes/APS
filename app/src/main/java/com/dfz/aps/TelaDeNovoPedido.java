@@ -8,7 +8,7 @@ import android.content.Intent;
 import android.widget.TextView;
 
 public class TelaDeNovoPedido extends AppCompatActivity {
-    public static final String EXTRA_MESSAGE = "message";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
