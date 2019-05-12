@@ -3,8 +3,10 @@ package com.dfz.aps;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
+import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.widget.Toast;
 
 public class APSdao extends SQLiteOpenHelper { private static final String db_Name = "db";
     private static final int ver =1;
@@ -41,33 +43,38 @@ public class APSdao extends SQLiteOpenHelper { private static final String db_Na
         onCreate(db);
     }
     //Adicionar Usuario
-    public void NovoUs(Usuario usuario){
+    public int NovoUs(Usuario usuario){
         ContentValues usu = new ContentValues();
         usu.put("Name",usuario.getName());
         usu.put("Senha",usuario.getSenha());
-        Salvar(usu);
+        int rs = Salvar(usu);
+        if(rs !=0){
+            return 1;
+        }else return 0;
     }
     //Continuacaoo de Adicionar Usuario
-    private void Salvar(ContentValues usu){
+    private int Salvar(ContentValues usu){
+        try{
         SQLiteDatabase dc = getWritableDatabase();
-        //onUpgrade(dc, ver, 2);
         dc.insert("Usuario", null, usu);
         dc.close();
+        return 1;}catch (SQLException e){
+            return 0;
+        }
     }
-    //Buscar Usuario
-    public ContentValues BuscaUsu(ContentValues usuario){
-        String nome = usuario.getAsString("Name");
-        String senha =usuario.getAsString("Senha");
+    //Buscar Nome Usuario
+    public int BNU(Usuario usu){
         SQLiteDatabase db = getReadableDatabase();
-        Cursor cursor = db.query("Usuario", new String[]{"Name","Senha","User_id"},"Name =?",new String[]{nome}, null, null, null);
-        String nome1 = cursor.getString(0);
-        String senha1 = cursor.getString(1);
-        int id = cursor.getInt(2);
-        ContentValues resultado = new ContentValues();
-        resultado.put("Name", nome1);
-        resultado.put("Senha",senha1);
-        resultado.put("Id", id);
-        return(resultado);
+        String nome, senha;
+        nome = usu.getName();
+        senha = usu.getSenha();
+        Cursor cursor = db.query("Usuario", new String[]{"User_id, Name, Senha"},"Name =?",new String[]{nome}, null, null, null);
+        String senha1 = cursor.getString(2);
+        String nome1 = cursor.getString(1);
+        int id = cursor.getInt(0);
+        if(nome.equals(nome1)&&senha.equals(senha1)){
+            return id;
+        }else return 0;
     }
 
     public int NovoPed(Pedido pedido){

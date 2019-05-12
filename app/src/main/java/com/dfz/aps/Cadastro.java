@@ -31,12 +31,17 @@ public class Cadastro extends AppCompatActivity {
 
         usuario.setName(na);
         usuario.setSenha(sen);
-        aps.NovoUs(usuario);
+        int rs = aps.NovoUs(usuario);
         aps.close();
 
         //Reseta os campos de senha e noome
         name.setText("");
         senha.setText("");
+        if (rs == 1){
+            Toast.makeText(this, "Usuario Cadastro =D", Toast.LENGTH_SHORT).show();
+        }else{
+            Toast.makeText(this, "Erro no Cadastro =C", Toast.LENGTH_SHORT).show();
+        }
         }catch (Exception e){
             Toast.makeText(this, "Deu ruim", Toast.LENGTH_SHORT).show();
         }
