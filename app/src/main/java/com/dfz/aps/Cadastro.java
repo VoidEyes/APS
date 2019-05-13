@@ -6,9 +6,6 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import java.sql.SQLException;
-
-
 public class Cadastro extends AppCompatActivity {
 
     @Override
@@ -31,10 +28,9 @@ public class Cadastro extends AppCompatActivity {
 
         usuario.setName(na);
         usuario.setSenha(sen);
+        aps.NovoUs(usuario);
         int rs = aps.NovoUs(usuario);
         aps.close();
-
-        //Reseta os campos de senha e noome
         name.setText("");
         senha.setText("");
         if (rs == 1){

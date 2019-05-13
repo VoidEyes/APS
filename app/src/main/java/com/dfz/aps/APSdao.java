@@ -6,7 +6,7 @@ import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.widget.Toast;
+import android.os.strictmode.SqliteObjectLeakedViolation;
 
 public class APSdao extends SQLiteOpenHelper { private static final String db_Name = "db";
     private static final int ver =1;
@@ -19,13 +19,13 @@ public class APSdao extends SQLiteOpenHelper { private static final String db_Na
     @Override
     public void onCreate(SQLiteDatabase db) {
         //Tabela Usuario
-        String sql1 ="CREATE TABLE Usuario (User_id INTEGER PRIMARY KEY AUTOINCREMENT, Name TEXT  NOT NULL, Senha TEXT NOT NULL);";
+        String sql1 ="CREATE TABLE Usuario ( id INTEGER PRIMARY KEY AUTOINCREMENT,Name TEXT NOT NULL, Senha TEXT NOT NULL);";
 
         //Tabela Pedido
-        String s1q2 ="CREATE TABLE Pedido (Ped_id INTEGER PRIMARY KEY AUTOINCREMENT,Local TEXT, Custo REAL, FOREIGN KEY (User_id) REFERENCES Usuario(User_id));";
+        String s1q2 ="CREATE TABLE Pedido (id INTEGER PRIMARY KEY AUTOINCREMENT,Local TEXT, Custo REAL, Us_Name);";
 
         //Tabela Iten
-        String sql3 ="CREATE TABLE Iten (Iten_id INTEGER PRIMARY KEY AUTOINCREMENT, uantidade INTEGER, Valor REAL, Name TEXT, FOREIGN KEY (Ped_id) REFERENCES Pedido(Ped_id));";
+        String sql3 ="CREATE TABLE Iten (id INTEGER PRIMARY KEY AUTOINCREMENT, uantidade INTEGER, Valor REAL, Name TEXT, Ped_id INTEGER);";
 
         db.execSQL(sql1);
         db.execSQL(s1q2);
@@ -34,7 +34,7 @@ public class APSdao extends SQLiteOpenHelper { private static final String db_Na
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int antigo, int novo){
-        String sql1 = "DROP TABLE IF EXISTS Usuarios";
+        String sql1 = "DROP TABLE IF EXISTS Usuario";
         String sql2= "DROP TABLE IF EXISTS Pedido";
         String sql3= "DROP TABLE IF EXISTS Iten";
         db.execSQL(sql1);
@@ -44,18 +44,21 @@ public class APSdao extends SQLiteOpenHelper { private static final String db_Na
     }
     //Adicionar Usuario
     public int NovoUs(Usuario usuario){
-        ContentValues usu = new ContentValues();
-        usu.put("Name",usuario.getName());
-        usu.put("Senha",usuario.getSenha());
-        int rs = Salvar(usu);
+        String nome =usuario.getName();
+        String senha =usuario.getSenha();
+        int rs = Salvar(nome, senha);
         if(rs !=0){
             return 1;
         }else return 0;
     }
+
     //Continuacaoo de Adicionar Usuario
-    private int Salvar(ContentValues usu){
+    private int Salvar(String nome, String senha){
         try{
         SQLiteDatabase dc = getWritableDatabase();
+        ContentValues usu = new ContentValues();
+        usu.put("Name", nome);
+        usu.put("Senha", senha);
         dc.insert("Usuario", null, usu);
         dc.close();
         return 1;}catch (SQLException e){
@@ -63,18 +66,20 @@ public class APSdao extends SQLiteOpenHelper { private static final String db_Na
         }
     }
     //Buscar Nome Usuario
-    public int BNU(Usuario usu){
+    public int BNU(String nome, String senha){
         SQLiteDatabase db = getReadableDatabase();
-        String nome, senha;
-        nome = usu.getName();
-        senha = usu.getSenha();
-        Cursor cursor = db.query("Usuario", new String[]{"User_id, Name, Senha"},"Name =?",new String[]{nome}, null, null, null);
-        String senha1 = cursor.getString(2);
-        String nome1 = cursor.getString(1);
-        int id = cursor.getInt(0);
-        if(nome.equals(nome1)&&senha.equals(senha1)){
-            return id;
-        }else return 0;
+        Cursor cursor = db.query("Usuario", new String[]{"Name","Senha"},"Name =?",new String[]{nome}, null, null, null);
+        String nome1 = cursor.getString(0);
+        String senha1 = cursor.getString(1);
+        if(nome.equals(nome1) && senha.equals(senha1)){
+            cursor.close();
+            db.close();
+            return 1;
+        }else {
+            cursor.close();
+            db.close();
+            return 0;
+        }
     }
 
     public int NovoPed(Pedido pedido){

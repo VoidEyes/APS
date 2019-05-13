@@ -14,21 +14,12 @@
         android:layout_marginTop="5dp"
         android:layout_marginLeft="5dp"
         app:layout_constraintStart_toStartOf="parent"/>
-    <TextView
-        android:id="@+id/idusu"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="18sp"
-        android:text=""
-        android:layout_marginTop="5dp"
-        app:layout_constraintStart_toStartOf="@id/nomeusu"
-        app:layout_constraintTop_toBottomOf="@id/nomeusu"/>
     <Button
         android:id="@+id/NovaCompra"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/novacompra"
-        android:onClick="NovoPedido"
+        android:onClick="NovaCompra"
         android:layout_marginTop="5dp"
         android:layout_marginRight="5dp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -38,7 +29,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
-        android:text="@string/todascompras"
+        android:text="@string/outrascompras"
         app:layout_constraintEnd_toEndOf="@+id/NovaCompra"
         app:layout_constraintTop_toBottomOf="@id/NovaCompra"/>
 
