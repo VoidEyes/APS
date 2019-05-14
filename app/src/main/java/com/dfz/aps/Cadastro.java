@@ -6,6 +6,8 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import java.util.concurrent.ExecutionException;
+
 public class Cadastro extends AppCompatActivity {
 
     @Override
@@ -41,5 +43,20 @@ public class Cadastro extends AppCompatActivity {
         }catch (Exception e){
             Toast.makeText(this, "Deu ruim", Toast.LENGTH_SHORT).show();
         }
+    }
+    public void Resetar(View view){
+        try {
+            APSdao d = new APSdao(this);
+            int i =d.reseta();
+            d.close();
+            if(i==1){
+                Toast.makeText(this,"Resetado", Toast.LENGTH_SHORT);
+            }else{
+                Toast.makeText(this, "Erro", Toast.LENGTH_SHORT).show();
+            }
+        }catch (Exception e){
+            Toast.makeText(this,"Erro", Toast.LENGTH_SHORT);
+        }
+
     }
 }

@@ -1,9 +1,8 @@
 package com.dfz.aps;
 
 public class Pedido {
-    String local;
+    String local, nomeus;
     Float custo;
-    int user_id;
 
     public Float getCusto() {
         return custo;
@@ -21,11 +20,11 @@ public class Pedido {
         this.local = local;
     }
 
-    public int getUser_id() {
-        return user_id;
+    public String getNomeus() {
+        return nomeus;
     }
 
-    public void setUser_id(int user_id) {
-        this.user_id = user_id;
+    public void setNomeus(String nomeus) {
+        this.nomeus = nomeus;
     }
 }

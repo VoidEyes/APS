@@ -59,14 +59,25 @@
         app:layout_constraintTop_toBottomOf="@id/Pa"/>
 
     <Button
-        android:id="@+id/Salvar"
+    android:id="@+id/Salvar"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="10dp"
+    android:text="@string/Salvar"
+    android:onClick="Salvar"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintTop_toBottomOf="@id/Passo"/>
+
+    <Button
+        android:id="@+id/Reset"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
-        android:text="@string/Salvar"
-        android:onClick="Salvar"
+        android:text="@string/reset"
+        android:onClick="Resetar"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/Passo"/>
+        app:layout_constraintTop_toBottomOf="@id/Salvar"/>
 
 </android.support.constraint.ConstraintLayout>

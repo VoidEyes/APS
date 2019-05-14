@@ -18,22 +18,23 @@ public class MainActivity extends AppCompatActivity {
     public void Entrar(View view) {
        try {
             APSdao aps = new APSdao(this);
+            Usuario usu = new Usuario();
             EditText nomeV = (EditText)findViewById(R.id.login);
             EditText senhaV = (EditText)findViewById(R.id.Pass);
-            int rn;
             String nome = nomeV.getText().toString();
             String senha = senhaV.getText().toString();
-            //rn = aps.BNU(nome, senha);
-           rn=1;
-           aps.close();
-            if (rn != 0) {
-                Intent intent = new Intent(this, TelaDeNovoPedido.class);
-                intent.putExtra("nome", nome);
-                startActivity(intent);
-            } else Toast.makeText(this, "Usuario/Senha incorretos. =C", Toast.LENGTH_SHORT);
+            usu = aps.BNU(nome);
+            if(usu.getName()!=null){
+                if(nome.equals(usu.getName())&&senha.equals(usu.getSenha())){
+                    Intent intent = new Intent(this, TelaDeNovoPedido.class);
+                    intent.putExtra("nome", nome);
+                    startActivity(intent);
+                }else Toast.makeText(this, "Usuario/Senha incorretos. =C", Toast.LENGTH_SHORT);
+            }
+            aps.close();
        }catch (Exception e) {
            Toast.makeText(this, "Erro inesperado =c", Toast.LENGTH_LONG).show();
-        }
+       }
     }
 
     public void Cadastrar(View view){

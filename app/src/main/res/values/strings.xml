@@ -8,4 +8,5 @@
     <string name="novacompra">Nova Compra</string>
     <string name="outrascompras">Outras Compras</string>
     <string name="comprasusu">Compras Usuario</string>
+    <string name="reset">Resetar Banco de dados</string>
 </resources>
