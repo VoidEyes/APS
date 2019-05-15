@@ -18,13 +18,13 @@ public class APSdao extends SQLiteOpenHelper { private static final String db_Na
     @Override
     public void onCreate(SQLiteDatabase db) {
         //Tabela Usuario
-        String sql1 ="CREATE TABLE Usuario ( id INTEGER PRIMARY KEY AUTOINCREMENT,Name TEXT NOT NULL, Senha TEXT NOT NULL);";
+        String sql1 ="CREATE TABLE Usuario (id INTEGER PRIMARY KEY AUTOINCREMENT,Name TEXT NOT NULL, Senha TEXT NOT NULL);";
 
-        //Tabela Pedido
-        String s1q2 ="CREATE TABLE Compra (id INTEGER PRIMARY KEY AUTOINCREMENT,Local TEXT, Custo REAL, Us_Name);";
+        //Tabela Compra
+        String s1q2 ="CREATE TABLE Compra (id INTEGER PRIMARY KEY AUTOINCREMENT,Local TEXT, Data TEXT, Custo REAL, Us_Name NOT NULL);";
 
         //Tabela Iten
-        String sql3 ="CREATE TABLE Iten (id INTEGER PRIMARY KEY AUTOINCREMENT, Quantidade INTEGER, Valor REAL, Name TEXT, C_id INTEGER);";
+        String sql3 ="CREATE TABLE Iten (id INTEGER PRIMARY KEY AUTOINCREMENT, Quantidade INTEGER, Valor REAL, Name TEXT, C_id INTEGER NOT NULL);";
 
         db.execSQL(sql1);
         db.execSQL(s1q2);
@@ -101,14 +101,23 @@ public class APSdao extends SQLiteOpenHelper { private static final String db_Na
         SQLiteDatabase d = getWritableDatabase();
         ContentValues ped = new ContentValues();
         String local = pedido.getLocal();
-        Float custo = pedido.getCusto();
         String usun = pedido.getNomeus();
+        String data= pedido.getData();
         ped.put("Local",local);
         ped.put("Us_Name",usun);
-        ped.put("Custo",custo);
+        ped.put("Data",data);
         d.insert("Compra",null,ped);
-        d.close();
-        return 1;
+        Cursor id = d.rawQuery("SELECT id FROM Compra",null);
+        id.moveToLast();
+        if (id!=null){
+            int i = id.getInt(0);
+            id.close();
+            d.close();
+            return i;
+        }else{
+            id.close();
+            d.close();
+            return 0;}
         }catch (SQLException e){
             return 0;
         }

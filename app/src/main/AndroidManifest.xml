@@ -9,7 +9,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".TelaDeNovoPedido"></activity>
+        <activity android:name=".NovoIten"></activity>
+        <activity android:name=".NovaCompra" />
+        <activity android:name=".TelaDeNovoPedido" />
         <activity android:name=".Cadastro" />
         <activity android:name=".MainActivity">
             <intent-filter>

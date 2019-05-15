@@ -19,6 +19,10 @@ public class TelaDeNovoPedido extends AppCompatActivity {
     }
 
     public void NovaCompra(View view){
-
+        Intent intent = new Intent(this,NovaCompra.class);
+        Intent in = getIntent();
+        String nome = in.getStringExtra("nome");
+        intent.putExtra("Name",nome);
+        startActivity(intent);
     }
 }

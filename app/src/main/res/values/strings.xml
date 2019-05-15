@@ -9,4 +9,13 @@
     <string name="outrascompras">Outras Compras</string>
     <string name="comprasusu">Compras Usuario</string>
     <string name="reset">Resetar Banco de dados</string>
+    <string name="local">Local</string>
+    <string name="adi">Adicionar Iten</string>
+    <string name="iten">Item</string>
+    <string name="custo">Valor unidade</string>
+    <string name="quantidade">Quantidade</string>
+    <string name="add">Adicionar</string>
+    <string name="ndd">Finalizar</string>
+    <string name="obs1">Adicione todos os itens da compra antes de finalizar.</string>
+    <string name="obs2">Usar "'.'" em vez de "','" no valor unico.</string>
 </resources>

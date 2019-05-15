@@ -1,16 +1,18 @@
 package com.dfz.aps;
 
 public class Pedido {
-    String local, nomeus;
-    Float custo;
+    String local;
+    String nomeus;
 
-    public Float getCusto() {
-        return custo;
+    public String getData() {
+        return data;
     }
 
-    public void setCusto(Float custo) {
-        this.custo = custo;
+    public void setData(String data) {
+        this.data = data;
     }
+
+    String data;
 
     public String getLocal() {
         return local;
