@@ -51,6 +51,6 @@ public class NovoIten extends AppCompatActivity {
 
     }
     public void CL(View view){
-        onDestroy();
+        finish();
     }
 }

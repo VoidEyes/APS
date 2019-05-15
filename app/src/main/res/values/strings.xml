@@ -18,4 +18,14 @@
     <string name="ndd">Finalizar</string>
     <string name="obs1">Adicione todos os itens da compra antes de finalizar.</string>
     <string name="obs2">Usar "'.'" em vez de "','" no valor unico.</string>
+    <string-array name="LD">
+        <item>Local</item>
+        <item>Data</item>
+    </string-array>
+    <string-array name="LI">
+        <item>Nome</item>
+        <item>Quantidade</item>
+        <item>Valor unidade</item>
+    </string-array>
+    <string name="vo">voltar</string>
 </resources>

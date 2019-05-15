@@ -29,6 +29,8 @@ public class NovaCompra extends AppCompatActivity {
             compra.setData(data);
             int id = ap.NovaCompra(compra);
             if(id!=0){
+                lc.setText("");
+                dt.setText("");
                 Intent intent = new Intent(this,NovoIten.class);
                 intent.putExtra("Id",id);
                 startActivity(intent);
@@ -41,5 +43,8 @@ public class NovaCompra extends AppCompatActivity {
             Toast.makeText(this, "Erro ao criar compra", Toast.LENGTH_SHORT).show();
         }
 
+    }
+    public void vo (View view){
+        onDestroy();
     }
 }

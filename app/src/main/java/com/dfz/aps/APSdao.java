@@ -18,13 +18,13 @@ public class APSdao extends SQLiteOpenHelper { private static final String db_Na
     @Override
     public void onCreate(SQLiteDatabase db) {
         //Tabela Usuario
-        String sql1 ="CREATE TABLE Usuario (id INTEGER PRIMARY KEY AUTOINCREMENT,Name TEXT NOT NULL, Senha TEXT NOT NULL);";
+        String sql1 ="CREATE TABLE Usuario (_id INTEGER PRIMARY KEY AUTOINCREMENT,Name TEXT NOT NULL, Senha TEXT NOT NULL);";
 
         //Tabela Compra
-        String s1q2 ="CREATE TABLE Compra (id INTEGER PRIMARY KEY AUTOINCREMENT,Local TEXT, Data TEXT, Custo REAL, Us_Name NOT NULL);";
+        String s1q2 ="CREATE TABLE Compra (_id INTEGER PRIMARY KEY AUTOINCREMENT,Local TEXT, Data TEXT, Custo REAL, Us_Name NOT NULL);";
 
         //Tabela Iten
-        String sql3 ="CREATE TABLE Iten (id INTEGER PRIMARY KEY AUTOINCREMENT, Quantidade INTEGER, Valor REAL, Name TEXT, C_id INTEGER NOT NULL);";
+        String sql3 ="CREATE TABLE Iten (_id INTEGER PRIMARY KEY AUTOINCREMENT, Quantidade INTEGER, Valor REAL, Name TEXT, C_id INTEGER NOT NULL);";
 
         db.execSQL(sql1);
         db.execSQL(s1q2);
@@ -64,26 +64,6 @@ public class APSdao extends SQLiteOpenHelper { private static final String db_Na
             return 0;
         }
     }
-    //Buscar Nome Usuario
-    public Usuario BNU(String nome){
-        SQLiteDatabase d = getWritableDatabase();
-        Cursor busca = d.rawQuery("SELECT Name, Senha FROM Usuario WHERE Name = ?", new String[]{nome});
-        if(busca!=null){
-            String nom = busca.getString(busca.getColumnIndex("Name"));
-            String sen = busca.getString(busca.getColumnIndex("Senha"));
-            Usuario usu = new Usuario();
-            usu.setName(nom);
-            usu.setSenha(sen);
-            busca.close();
-            d.close();
-            return usu;
-        }else{
-            Usuario usu = new Usuario();
-            busca.close();
-            d.close();
-            return usu;
-        }
-    }
 
     public int reseta(){
         try{
@@ -107,7 +87,7 @@ public class APSdao extends SQLiteOpenHelper { private static final String db_Na
         ped.put("Us_Name",usun);
         ped.put("Data",data);
         d.insert("Compra",null,ped);
-        Cursor id = d.rawQuery("SELECT id FROM Compra",null);
+        Cursor id = d.rawQuery("SELECT _id FROM Compra",null);
         id.moveToLast();
         if (id!=null){
             int i = id.getInt(0);

@@ -1,10 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
     tools:context=".TelaDeNovoPedido">
+<android.support.constraint.ConstraintLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
     <TextView
         android:id="@+id/nomeusu"
         android:layout_width="wrap_content"
@@ -34,26 +37,25 @@
         app:layout_constraintEnd_toEndOf="@+id/NovaCompra"
         app:layout_constraintTop_toBottomOf="@id/NovaCompra"/>
 
-    <!--<TextView-->
-        <!--android:id="@+id/comprasusu"-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:layout_marginBottom="5dp"-->
-        <!--android:textSize="18sp"-->
-        <!--android:text="@string/comprasusu"-->
-        <!--app:layout_constraintStart_toStartOf="parent"-->
-        <!--app:layout_constraintEnd_toEndOf="parent"-->
-        <!--app:layout_constraintBottom_toTopOf="@id/spinner1"/>-->
+    <TextView
+        android:id="@+id/comprasusu"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="5dp"
+        android:textSize="18sp"
+        android:text="@string/comprasusu"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/spinner"/>
 
-    <!--<ListView-->
-        <!--android:id="@+id/spinner1"-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:layout_marginTop="130dp"-->
-        <!--app:layout_constraintStart_toStartOf="parent"-->
-        <!--app:layout_constraintEnd_toEndOf="parent"-->
-        <!--app:layout_constraintTop_toTopOf="parent">-->
-
-    <!--</ListView>-->
+    <ListViewView
+        android:id="@+id/spinner"
+        android:layout_width="409dp"
+        android:layout_height="600dp"
+        android:layout_marginTop="130dp"
+        android:entries="@array/LD"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:layout_editor_absoluteX="0dp"></ListViewView>
 
 </android.support.constraint.ConstraintLayout>
+</ScrollView>
