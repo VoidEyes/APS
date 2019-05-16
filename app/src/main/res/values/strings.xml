@@ -12,6 +12,7 @@
     <string name="local">Local</string>
     <string name="adi">Adicionar Iten</string>
     <string name="iten">Item</string>
+    <string name="itens">Itens da Compra</string>
     <string name="custo">Valor unidade</string>
     <string name="quantidade">Quantidade</string>
     <string name="add">Adicionar</string>
@@ -21,6 +22,7 @@
     <string-array name="LD">
         <item>Local</item>
         <item>Data</item>
+        <item>ID</item>
     </string-array>
     <string-array name="LI">
         <item>Nome</item>
@@ -28,4 +30,7 @@
         <item>Valor unidade</item>
     </string-array>
     <string name="vo">voltar</string>
+    <string name="Ca">Todas as compras no sistema</string>
+    <string name="odl">Ordenar por local</string>
+    <string name="odt">Ordenar por Data</string>
 </resources>

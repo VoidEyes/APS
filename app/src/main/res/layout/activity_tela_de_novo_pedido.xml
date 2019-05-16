@@ -17,7 +17,8 @@
         android:layout_marginTop="5dp"
         android:layout_marginLeft="5dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"/>
+        app:layout_constraintLeft_toLeftOf="parent"
+        tools:ignore="MissingConstraints" />
     <Button
         android:id="@+id/NovaCompra"
         android:layout_width="wrap_content"
@@ -34,6 +35,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
         android:text="@string/outrascompras"
+        android:onClick="Ots"
         app:layout_constraintEnd_toEndOf="@+id/NovaCompra"
         app:layout_constraintTop_toBottomOf="@id/NovaCompra"/>
 
@@ -48,14 +50,16 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toTopOf="@id/spinner"/>
 
-    <ListViewView
+    <ListView
         android:id="@+id/spinner"
-        android:layout_width="409dp"
+        android:layout_width="414dp"
         android:layout_height="600dp"
         android:layout_marginTop="130dp"
         android:entries="@array/LD"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:layout_editor_absoluteX="0dp"></ListViewView>
+        tools:layout_editor_absoluteX="-2dp" />
 
 </android.support.constraint.ConstraintLayout>
 </ScrollView>

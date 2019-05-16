@@ -1,7 +1,7 @@
 package com.dfz.aps;
 
 public class Pedido {
-    String local;
+    String local, data;
     String nomeus;
 
     public String getData() {
@@ -11,8 +11,6 @@ public class Pedido {
     public void setData(String data) {
         this.data = data;
     }
-
-    String data;
 
     public String getLocal() {
         return local;
@@ -29,4 +27,5 @@ public class Pedido {
     public void setNomeus(String nomeus) {
         this.nomeus = nomeus;
     }
+
 }

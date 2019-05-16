@@ -45,6 +45,6 @@ public class NovaCompra extends AppCompatActivity {
 
     }
     public void vo (View view){
-        onDestroy();
+        finish();
     }
 }
