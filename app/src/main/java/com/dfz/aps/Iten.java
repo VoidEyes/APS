@@ -1,19 +1,24 @@
 package com.dfz.aps;
 
-public class Iten {
+import android.content.Context;
+
+public class Iten extends APSdao{
     String name;
     int quantidade, Ped_id;
     Float valor;
+    Double custo;
 
-    public Float getCusto() {
+    public Iten(Context context) {
+        super(context);
+    }
+
+    public Double getCusto() {
         return custo;
     }
 
-    public void setCusto(Float custo) {
+    public void setCusto(Double custo) {
         this.custo = custo;
     }
-
-    Float custo;
 
     public String getName() {
         return name;
@@ -45,5 +50,10 @@ public class Iten {
 
     public void setQuantidade(int quantidade) {
         this.quantidade = quantidade;
+    }
+
+    public int ItenNovo(){
+        int i = NovoIten(name, quantidade, Ped_id, valor, custo);
+        return i;
     }
 }

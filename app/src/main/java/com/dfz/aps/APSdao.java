@@ -80,71 +80,92 @@ public class APSdao extends SQLiteOpenHelper { private static final String db_Na
 
     //Metodo para logar no sistema
     protected int Log(String nome, String senha){
-         try {
-             SQLiteDatabase dc = getWritableDatabase();
-             Cursor busca = dc.rawQuery("SELECT _id, Name, Senha FROM Usuario WHERE Name =?", new String[]{nome});
-             busca.moveToFirst();
-             if (senha.equals(busca.getString(busca.getColumnIndex("Senha")))) {
-                 return 1;
-             } else {
-                 return 0;
-             }
-         }catch (SQLException e){
-             return 0;
-         }
-    }
-
-    public int NovaCompra(Pedido pedido){
-        try{
-        SQLiteDatabase d = getWritableDatabase();
-        ContentValues ped = new ContentValues();
-        String Estabelecimento = pedido.getEstabelecimento();
-        String Endereco = pedido.getEndenreco();
-        String usun = pedido.getNomeus();
-        String data= pedido.getData();
-        String lat = pedido.getLat();
-        String longi = pedido.getLongi();
-        ped.put("Estabelecimento",Estabelecimento);
-        ped.put("Us_Name",usun);
-        ped.put("Data",data);
-        ped.put("Latitude",lat);
-        ped.put("Longitude",longi);
-        ped.put("Endereco",Endereco);
-        d.insert("Compra",null,ped);
-        Cursor id = d.rawQuery("SELECT _id FROM Compra",null);
-        id.moveToLast();
-        if (id!=null){
-            int i = id.getInt(0);
-            id.close();
-            d.close();
-            return i;
-        }else{
-            id.close();
-            d.close();
-            return 0;}
+        try {
+            SQLiteDatabase dc = getWritableDatabase();
+            Cursor busca = dc.rawQuery("SELECT _id, Name, Senha FROM Usuario WHERE Name =?", new String[]{nome});
+            busca.moveToFirst();
+            if (senha.equals(busca.getString(busca.getColumnIndex("Senha")))) {
+                return 1;
+            } else {
+                return 0;
+            }
         }catch (SQLException e){
             return 0;
         }
     }
 
-    public int NovoIten (Iten iten){
+    // Metodo que Cria uma nova "Compra"
+    protected int NovaCompra(String estabelecimento, String endereco, String Usu_Nome, String data, String latitude, String longitude){
         try{
             SQLiteDatabase d = getWritableDatabase();
-            ContentValues it = new ContentValues();
-            String nome = iten.getName();
-            int id_ped = iten.getPed_id();
-            int quantidade = iten.getQuantidade();
-            float valor = iten.getValor();
-            it.put("Quantidade", quantidade);
-            it.put("valor", valor);
-            it.put("Name", nome);
-            it.put("C_id",id_ped);
-            d.insert("Iten",null,it);
-            d.close();
-            return 1;
+            ContentValues ped = new ContentValues();
+            ped.put("Estabelecimento",estabelecimento);
+            ped.put("Us_Name",Usu_Nome);
+            ped.put("Data",data);
+            ped.put("Latitude",latitude);
+            ped.put("Longitude",longitude);
+            ped.put("Endereco",endereco);
+            d.insert("Compra",null,ped);
+            Cursor id = d.rawQuery("SELECT _id FROM Compra",null);
+            id.moveToLast();
+            if (id!=null){
+                int i = id.getInt(0);
+                id.close();
+                d.close();
+                return i;
+            }else{
+                id.close();
+                d.close();
+                return 0;}
         }catch (SQLException e){
             return 0;
         }
+    }
+
+    //Buscar Compras De um determinado Usuario
+    protected ContentValues UsuComp(String nome, int pos){
+        SQLiteDatabase d = getReadableDatabase();
+        Cursor busca = d.rawQuery("SELECT _id,Estabelecimento,Endereco,Data,Us_Name,Custo FROM Compra WHERE Us_Name = ?", new String[]{nome});
+        busca.moveToPosition(pos);
+        ContentValues compusu = new ContentValues();
+        String estab = busca.getString(1);
+        compusu.put("Estabelecimento",estab);
+        compusu.put("Endereoc",busca.getString(busca.getColumnIndex("Endereco")));
+        compusu.put("Data",busca.getString(busca.getColumnIndex("Data")));
+        compusu.put("Us_Name",busca.getString(busca.getColumnIndex("Us_Name")));
+        compusu.put("Custo",busca.getFloat(busca.getColumnIndex("Custo")));
+        return compusu;
+    }
+
+    // Metodo que Adiciona Itens relacionados a uma determinada Compra
+    protected int NovoIten (String nome, int quantidade, int Ped_id, Float valor, Double custo){
+//        try{
+        SQLiteDatabase d = getWritableDatabase();
+        ContentValues it = new ContentValues();
+        it.put("Quantidade", quantidade);
+        it.put("valor", valor);
+        it.put("Name", nome);
+        it.put("Custo",custo);
+        it.put("C_id",Ped_id);
+        d.insert("Iten",null,it);
+        Att(custo,Ped_id);
+        d.close();
+        return 1;
+//        }catch (SQLException e){
+//            return 0;
+//        }
+    }
+
+    //Atualiza o campo Custo da tabela Compra
+    private void Att(double ct, int id){
+        SQLiteDatabase d = getWritableDatabase();
+        ContentValues at = new ContentValues();
+        String cid = Integer.toString(id);
+        Cursor busc = d.rawQuery("SELECT Custo FROM Compra WHERE _id=?", new String[]{cid});
+        busc.moveToFirst();
+        Double custo= ct + busc.getFloat(busc.getColumnIndex("Custo"));
+        at.put("Custo",custo);
+        d.update("Compra",at,"_id=?",new String[]{cid});
     }
 
     //Reseta Banco de dados ~Fins de testes~
@@ -157,13 +178,5 @@ public class APSdao extends SQLiteOpenHelper { private static final String db_Na
         }catch (SQLException e){
             return 0;
         }
-    }
-
-    public void Att(double ct, int id){;
-        SQLiteDatabase d = getWritableDatabase();
-        ContentValues at = new ContentValues();
-        String idp = Integer.toString(id);
-        at.put("Custo",ct);
-        d.update("Compra",at,"_id=?",new String[]{idp});
     }
 }

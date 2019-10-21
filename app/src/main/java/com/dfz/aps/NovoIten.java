@@ -7,34 +7,31 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 public class NovoIten extends AppCompatActivity {
-    double a;
-    double b;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.novo_iten);
-        a = 0;
-        b = 0;
+
         }
 
     public void NI(View view){
         Bundle extras = getIntent().getExtras();
-        APSdao ap = new APSdao(this);
-        int idp = extras.getInt("Id");
         EditText nome =(EditText)findViewById(R.id.nt);
         EditText quantidade =(EditText)findViewById(R.id.qt);
         EditText custo =(EditText)findViewById(R.id.ct);
-        String nm = nome.getText().toString(), quan = quantidade.getText().toString(),cu = custo.getText().toString();
+        String quan = quantidade.getText().toString(),cu = custo.getText().toString();
         int qt = Integer.parseInt(quan);
         Float qtt = Float.parseFloat(quan);
-        Float ct = Float.parseFloat(cu);
-        b = ct*qtt;
-        Iten iten = new Iten();
-        iten.setName(nm);
-        iten.setPed_id(idp);
-        iten.setValor(ct);
+        Float valor = Float.parseFloat(cu);
+        Double Custo = Double.valueOf(valor*qtt);
+        Iten iten = new Iten(this);
+        iten.setName(nome.getText().toString());
+        iten.setPed_id(extras.getInt("Id"));
+        iten.setValor(valor);
         iten.setQuantidade(qt);
-        int i = ap.NovoIten(iten);
+        iten.setCusto(Custo);
+        int i = iten.ItenNovo();
         if(i==1){
             nome.setText("");
             quantidade.setText("");
@@ -46,8 +43,6 @@ public class NovoIten extends AppCompatActivity {
             custo.setText("");
             Toast.makeText(this, "Erro ao Adicionar", Toast.LENGTH_SHORT).show();
         }
-        a = b + a;
-        ap.Att(a, idp);
     }
 
     public void CL(View view){

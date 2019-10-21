@@ -48,8 +48,6 @@ public class DC extends AppCompatActivity {
 
     private void Caso1(){
         Bundle pos = getIntent().getExtras();
-        String is;
-        int caso =pos.getInt("caso"),cid ,i;
         SQLiteOpenHelper b = new APSdao(this);
         SQLiteDatabase bc = b.getReadableDatabase();
         TextView esta = (TextView) findViewById(R.id.Esta1);
@@ -57,19 +55,17 @@ public class DC extends AppCompatActivity {
         TextView end = (TextView) findViewById(R.id.Ende);
         TextView cut = (TextView) findViewById(R.id.custocc);
         ListView lv = (ListView) findViewById(R.id.li);
-        String nome = pos.getString("nome");
-        i = pos.getInt("posi")+1;
-        Cursor busca = bc.rawQuery("SELECT _id,Estabelecimento,Endereco,Data,Us_Name,Custo FROM Compra WHERE Us_Name = ?", new String[]{nome});
-        for (int ii = 0; ii < i; ii++) {
-            busca.moveToNext();
-        }
-        esta.setText("Estabelecimento- " + busca.getString(busca.getColumnIndex("Estabelecimento")));
-        dat.setText("Data- " + busca.getString(busca.getColumnIndex("Data")));
-        end.setText("Endereco- "+busca.getString(busca.getColumnIndex("Endereco")));
-        cut.setText("Custo-"+busca.getFloat(busca.getColumnIndex("Custo")));
-        cid = busca.getInt(busca.getColumnIndex("_id"));
-        is = Integer.toString(cid);
-        Cursor iti = bc.rawQuery("SELECT _id, Quantidade, Valor, Name FROM Iten WHERE C_id =?", new String[]{is});
+        int i = pos.getInt("posi")+1;
+        Compra compra = new Compra(this);
+        compra.setUs_name(pos.getString("nome"));
+        compra.setPos(i);
+        compra.CompraUs();
+        esta.setText("Estabelecimento- " + compra.getEstabelecimento());
+        dat.setText("Data- " + compra.getData());
+        end.setText("Endereco- " + compra.getEndereco());
+        cut.setText("Custo-" + compra.getCusto());
+        String cid = Integer.toString(compra.getId());
+        Cursor iti = bc.rawQuery("SELECT _id, Quantidade, Valor, Name FROM Iten WHERE C_id =?", new String[]{cid});
         CursorAdapter itim = new SimpleCursorAdapter(this, android.R.layout.simple_expandable_list_item_2, iti, new String[]{"Name", "Quantidade"}, new int[]{android.R.id.text1, android.R.id.text2}, 0);
         lv.setAdapter(itim);
         bc.close();
@@ -78,7 +74,7 @@ public class DC extends AppCompatActivity {
     private void Caso2(){
         Bundle pos = getIntent().getExtras();
         String is;
-        int caso =pos.getInt("caso"),cid ,i;
+        int cid ,i;
         SQLiteOpenHelper b = new APSdao(this);
         SQLiteDatabase bc = b.getReadableDatabase();
         TextView esta = (TextView) findViewById(R.id.Esta1);
