@@ -5,6 +5,16 @@ public class Iten {
     int quantidade, Ped_id;
     Float valor;
 
+    public Float getCusto() {
+        return custo;
+    }
+
+    public void setCusto(Float custo) {
+        this.custo = custo;
+    }
+
+    Float custo;
+
     public String getName() {
         return name;
     }

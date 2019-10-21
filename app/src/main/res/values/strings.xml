@@ -9,7 +9,10 @@
     <string name="outrascompras">Outras Compras</string>
     <string name="comprasusu">Compras Usuario</string>
     <string name="reset">Resetar Banco de dados</string>
-    <string name="local">Local</string>
+    <string name="ende">Endereco</string>
+    <string name="lat">Latitude</string>
+    <string name="longe">Longitude</string>
+    <string name="stab">Estabelecimento</string>
     <string name="adi">Adicionar Iten</string>
     <string name="iten">Item</string>
     <string name="itens">Itens da Compra</string>
@@ -33,4 +36,6 @@
     <string name="Ca">Todas as compras no sistema</string>
     <string name="odl">Ordenar por local</string>
     <string name="odt">Ordenar por Data</string>
+    <string name="title_activity_maps">Map</string>
+    <string name="TCM">Mapa dos Estabelecimentos</string>
 </resources>

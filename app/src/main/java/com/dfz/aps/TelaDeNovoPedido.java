@@ -12,6 +12,7 @@ import android.widget.CursorAdapter;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class TelaDeNovoPedido extends AppCompatActivity {
     @Override
@@ -24,8 +25,8 @@ public class TelaDeNovoPedido extends AppCompatActivity {
         NomeShow.setText("" + nome);
         SQLiteOpenHelper bs = new APSdao(this);
         SQLiteDatabase bc = bs.getReadableDatabase();
-        Cursor busca = bc.rawQuery("SELECT _id,Local,Data FROM Compra WHERE Us_Name = ?", new String[]{nome});
-        CursorAdapter lista = new SimpleCursorAdapter(this, android.R.layout.simple_expandable_list_item_2, busca, new String[]{"Local","Data","_id"}, new int[]{android.R.id.text1,android.R.id.text2},0);
+        Cursor busca = bc.rawQuery("SELECT _id,Estabelecimento,Data FROM Compra WHERE Us_Name = ?", new String[]{nome});
+        CursorAdapter lista = new SimpleCursorAdapter(this, android.R.layout.simple_expandable_list_item_2, busca, new String[]{"Estabelecimento","Data"}, new int[]{android.R.id.text1,android.R.id.text2},0);
         ListView list =(ListView)findViewById(R.id.spinner);
         list.setAdapter(lista);
         list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -59,5 +60,9 @@ public class TelaDeNovoPedido extends AppCompatActivity {
     public void Ots (View view){
         Intent intent= new Intent(this, Ots.class);
         startActivity(intent);
+    }
+    public void Mapi(View view) {
+            Intent intent = new Intent(this, Maps.class);
+            startActivity(intent);
     }
 }

@@ -2,6 +2,12 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="com.dfz.aps">
+    <!--
+         The ACCESS_COARSE/FINE_LOCATION permissions are not required to use
+         Google Maps Android API v2, but you must specify either coarse or fine
+         location permissions for the 'MyLocation' functionality.
+    -->
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
     <application
         android:allowBackup="true"
@@ -11,12 +17,27 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".Ots"></activity>
+        <activity android:name=".DCC"
+            android:label="Informacoes Iten"></activity>
+
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="@string/google_maps_key" />
+
+        <activity
+            android:name=".Maps"
+            android:label="@string/title_activity_maps" />
+        <activity android:name=".Ots"
+            android:label="Compras"/>
         <activity android:name=".DC" />
-        <activity android:name=".NovoIten" />
-        <activity android:name=".NovaCompra" />
-        <activity android:name=".TelaDeNovoPedido" />
-        <activity android:name=".Cadastro" />
+        <activity android:name=".NovoIten"
+            android:label="Adionar Iten"/>
+        <activity android:name=".NovaCompra"
+            android:label="Adicionar Compra"/>
+        <activity android:name=".TelaDeNovoPedido"
+            android:label="Home"/>
+        <activity android:name=".Cadastro"
+            android:label="Cadastro"/>
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

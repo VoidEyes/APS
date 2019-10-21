@@ -2,7 +2,8 @@
 <ScrollView  xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".TelaDeNovoPedido" android:layout_height="wrap_content"
+    tools:context=".TelaDeNovoPedido"
+    android:layout_height="wrap_content"
     android:layout_width="wrap_content">
 <android.support.constraint.ConstraintLayout
     android:layout_width="match_parent"
@@ -10,10 +11,10 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/Loc"
+        android:id="@+id/Esta1"
         android:layout_marginTop="5dp"
         android:layout_marginLeft="5dp"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"/>
     <TextView
         android:layout_width="wrap_content"
@@ -21,15 +22,24 @@
         android:id="@+id/Dat"
         android:layout_marginTop="5dp"
         android:layout_marginLeft="5dp"
-        app:layout_constraintTop_toBottomOf="@id/Loc"
-        app:layout_constraintLeft_toLeftOf="parent"/>
+        app:layout_constraintTop_toBottomOf="@id/UsName"
+        app:layout_constraintLeft_toLeftOf="parent"
+        tools:ignore="MissingConstraints" />
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/UsName"
         android:layout_marginTop="5dp"
         android:layout_marginLeft="5dp"
-        app:layout_constraintTop_toBottomOf="@id/Dat"
+        app:layout_constraintTop_toBottomOf="@id/Ende"
+        app:layout_constraintLeft_toLeftOf="parent"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/Ende"
+        android:layout_marginTop="5dp"
+        android:layout_marginLeft="5dp"
+        app:layout_constraintTop_toBottomOf="@id/Esta1"
         app:layout_constraintLeft_toLeftOf="parent"/>
     <TextView
         android:layout_width="wrap_content"
@@ -39,15 +49,25 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintBottom_toTopOf="@id/li"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text=""
+        android:id="@+id/custocc"
+        android:layout_marginTop="5dp"
+        android:layout_marginRight="5dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        tools:ignore="MissingConstraints" />
 
     <ListView
         android:id="@+id/li"
         android:layout_width="0dp"
         android:layout_height="603dp"
-        android:layout_marginTop="130dp"
+        android:layout_marginTop="100dp"
         android:entries="@array/LD"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@id/Esta1" />
 </android.support.constraint.ConstraintLayout>
 </ScrollView>

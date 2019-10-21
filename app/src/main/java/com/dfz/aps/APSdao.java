@@ -7,6 +7,7 @@ import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+
 public class APSdao extends SQLiteOpenHelper { private static final String db_Name = "db";
     private static final int ver =1;
 
@@ -18,17 +19,37 @@ public class APSdao extends SQLiteOpenHelper { private static final String db_Na
     @Override
     public void onCreate(SQLiteDatabase db) {
         //Tabela Usuario
-        String sql1 ="CREATE TABLE Usuario (_id INTEGER PRIMARY KEY AUTOINCREMENT,Name TEXT NOT NULL, Senha TEXT NOT NULL);";
+        String sql1 ="CREATE TABLE Usuario (_id INTEGER PRIMARY KEY AUTOINCREMENT,Name TEXT UNIQUE, Senha TEXT NOT NULL);";
 
         //Tabela Compra
-        String s1q2 ="CREATE TABLE Compra (_id INTEGER PRIMARY KEY AUTOINCREMENT,Local TEXT, Data TEXT, Custo REAL, Us_Name NOT NULL);";
+        String s1q2 ="CREATE TABLE Compra (_id INTEGER PRIMARY KEY AUTOINCREMENT,Endereco TEXT,Estabelecimento TEXT, Data TEXT, Custo REAL,Latitude TEXT,Longitude TEXT, Us_Name NOT NULL);";
 
         //Tabela Iten
-        String sql3 ="CREATE TABLE Iten (_id INTEGER PRIMARY KEY AUTOINCREMENT, Quantidade INTEGER, Valor REAL, Name TEXT, C_id INTEGER NOT NULL);";
+        String sql3 ="CREATE TABLE Iten (_id INTEGER PRIMARY KEY AUTOINCREMENT, Quantidade INTEGER, Valor REAL, Name TEXT,Custo REAL, C_id INTEGER NOT NULL);";
 
         db.execSQL(sql1);
         db.execSQL(s1q2);
         db.execSQL(sql3);
+        ContentValues usu = new ContentValues();
+        usu.put("Name", "Deus");
+        usu.put("Senha","1");
+        db.insert("Usuario",null,usu);
+        ContentValues comp = new ContentValues();
+        comp.put("Estabelecimento","Prezunic");
+        comp.put("Endereco","R. Dias da Cruz, 579");
+        comp.put("Data","20/05/2019");
+        comp.put("Custo",20);
+        comp.put("Latitude","-22.905381");
+        comp.put("Longitude","-43.291154");
+        comp.put("Us_Name","Deus");
+        db.insert("Compra",null,comp);
+        ContentValues ine = new ContentValues();
+        ine.put("Quantidade",4);
+        ine.put("Valor",5);
+        ine.put("Name","Matte Leao");
+        ine.put("Custo",20);
+        ine.put("C_id",1);
+        db.insert("Iten",null,ine);
     }
 
     @Override
@@ -41,51 +62,54 @@ public class APSdao extends SQLiteOpenHelper { private static final String db_Na
         db.execSQL(sql3);
         onCreate(db);
     }
+
     //Adicionar Usuario
-    public int NovoUs(Usuario usuario){
-        String nome =usuario.getName();
-        String senha =usuario.getSenha();
-        int rs = Salvar(nome, senha);
-        if(rs !=0){
-            return 1;
-        }else return 0;
-    }
-
-    //Continuacaoo de Adicionar Usuario
-    private int Salvar(String nome, String senha){
+    protected int NovoUs(String nome, String senha){
         try{
-        SQLiteDatabase dc = getWritableDatabase();
-        ContentValues usu = new ContentValues();
-        usu.put("Name", nome);
-        usu.put("Senha", senha);
-        dc.insert("Usuario", null, usu);
-        dc.close();
-        return 1;}catch (SQLException e){
-            return 0;
-        }
-    }
-
-    public int reseta(){
-        try{
-            SQLiteDatabase d =getWritableDatabase();
-            onUpgrade(d, ver, 2);
-            d.close();
+            SQLiteDatabase dc = getWritableDatabase();
+            ContentValues usu = new ContentValues();
+            usu.put("Name", nome);
+            usu.put("Senha",senha);
+            dc.insert("Usuario",null, usu);
+            dc.close();
             return 1;
         }catch (SQLException e){
             return 0;
         }
     }
 
+    //Metodo para logar no sistema
+    protected int Log(String nome, String senha){
+         try {
+             SQLiteDatabase dc = getWritableDatabase();
+             Cursor busca = dc.rawQuery("SELECT _id, Name, Senha FROM Usuario WHERE Name =?", new String[]{nome});
+             busca.moveToFirst();
+             if (senha.equals(busca.getString(busca.getColumnIndex("Senha")))) {
+                 return 1;
+             } else {
+                 return 0;
+             }
+         }catch (SQLException e){
+             return 0;
+         }
+    }
+
     public int NovaCompra(Pedido pedido){
         try{
         SQLiteDatabase d = getWritableDatabase();
         ContentValues ped = new ContentValues();
-        String local = pedido.getLocal();
+        String Estabelecimento = pedido.getEstabelecimento();
+        String Endereco = pedido.getEndenreco();
         String usun = pedido.getNomeus();
         String data= pedido.getData();
-        ped.put("Local",local);
+        String lat = pedido.getLat();
+        String longi = pedido.getLongi();
+        ped.put("Estabelecimento",Estabelecimento);
         ped.put("Us_Name",usun);
         ped.put("Data",data);
+        ped.put("Latitude",lat);
+        ped.put("Longitude",longi);
+        ped.put("Endereco",Endereco);
         d.insert("Compra",null,ped);
         Cursor id = d.rawQuery("SELECT _id FROM Compra",null);
         id.moveToLast();
@@ -121,5 +145,25 @@ public class APSdao extends SQLiteOpenHelper { private static final String db_Na
         }catch (SQLException e){
             return 0;
         }
+    }
+
+    //Reseta Banco de dados ~Fins de testes~
+    public int reseta(){
+        try{
+            SQLiteDatabase d =getWritableDatabase();
+            onUpgrade(d, ver, 2);
+            d.close();
+            return 1;
+        }catch (SQLException e){
+            return 0;
+        }
+    }
+
+    public void Att(double ct, int id){;
+        SQLiteDatabase d = getWritableDatabase();
+        ContentValues at = new ContentValues();
+        String idp = Integer.toString(id);
+        at.put("Custo",ct);
+        d.update("Compra",at,"_id=?",new String[]{idp});
     }
 }

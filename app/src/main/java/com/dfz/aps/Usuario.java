@@ -1,7 +1,13 @@
 package com.dfz.aps;
 
-public class Usuario {
+import android.content.Context;
+
+public class Usuario extends APSdao {
     String Name, Senha;
+
+    public Usuario(Context context) {
+        super(context);
+    }
 
     public String getName() {
         return Name;
@@ -17,5 +23,13 @@ public class Usuario {
 
     public void setSenha(String senha) {
         Senha = senha;
+    }
+    public int Entrar(){
+        int i = Log(Name, Senha);
+        return i;
+    }
+    public int Adicionar(){
+        int i = NovoUs(Name, Senha);
+        return i;
     }
 }

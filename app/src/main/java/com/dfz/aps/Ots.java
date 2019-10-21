@@ -21,8 +21,8 @@ public class Ots extends AppCompatActivity {
         SQLiteOpenHelper bs = new APSdao(this);
         SQLiteDatabase bc = bs.getReadableDatabase();
         ListView list =(ListView)findViewById(R.id.listact);
-        Cursor busca =bc.rawQuery("SELECT _id,Local,Data FROM Compra ORDER BY Local", null);
-        CursorAdapter lista = new SimpleCursorAdapter(this, android.R.layout.simple_expandable_list_item_2, busca, new String[]{"Local","Data"}, new int[]{android.R.id.text1,android.R.id.text2},0);
+        Cursor busca =bc.rawQuery("SELECT _id,Estabelecimento,Endereco,Data FROM Compra ORDER BY Estabelecimento", null);
+        CursorAdapter lista = new SimpleCursorAdapter(this, android.R.layout.simple_expandable_list_item_2, busca, new String[]{"Estabelecimento","Data"}, new int[]{android.R.id.text1,android.R.id.text2},0);
         list.setAdapter(lista);
         list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -37,8 +37,8 @@ public class Ots extends AppCompatActivity {
         SQLiteOpenHelper bs = new APSdao(this);
         SQLiteDatabase bc = bs.getReadableDatabase();
         ListView list =(ListView)findViewById(R.id.listact);
-        Cursor busca = bc.rawQuery("SELECT _id,Local,Data FROM Compra ORDER BY Local", null);
-        CursorAdapter lista = new SimpleCursorAdapter(this, android.R.layout.simple_expandable_list_item_2, busca, new String[]{"Local","Data"}, new int[]{android.R.id.text1,android.R.id.text2},0);
+        Cursor busca = bc.rawQuery("SELECT _id, Estabelecimento,Endereco,Data FROM Compra ORDER BY Estabelecimento", null);
+        CursorAdapter lista = new SimpleCursorAdapter(this, android.R.layout.simple_expandable_list_item_2, busca, new String[]{"Estabelecimento","Data"}, new int[]{android.R.id.text1,android.R.id.text2},0);
         list.setAdapter(lista);
     }
 
@@ -47,8 +47,8 @@ public class Ots extends AppCompatActivity {
         SQLiteOpenHelper bs = new APSdao(this);
         SQLiteDatabase bc = bs.getReadableDatabase();
         ListView list =(ListView)findViewById(R.id.listact);
-        Cursor busca =bc.rawQuery("SELECT _id,Local,Data FROM Compra ORDER BY Data", null);
-        CursorAdapter lista = new SimpleCursorAdapter(this, android.R.layout.simple_expandable_list_item_2, busca, new String[]{"Local","Data"}, new int[]{android.R.id.text1,android.R.id.text2},0);
+        Cursor busca =bc.rawQuery("SELECT _id,Estabelecimento, Endereco,Data FROM Compra ORDER BY Data", null);
+        CursorAdapter lista = new SimpleCursorAdapter(this, android.R.layout.simple_expandable_list_item_2, busca, new String[]{"Estabelecimento","Data"}, new int[]{android.R.id.text1,android.R.id.text2},0);
         list.setAdapter(lista);
     }
 

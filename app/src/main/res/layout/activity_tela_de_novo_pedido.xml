@@ -39,6 +39,15 @@
         app:layout_constraintEnd_toEndOf="@+id/NovaCompra"
         app:layout_constraintTop_toBottomOf="@id/NovaCompra"/>
 
+    <Button
+        android:layout_width="171dp"
+        android:layout_height="0dp"
+        android:layout_marginLeft="5dp"
+        android:text="@string/TCM"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/comprasusu"
+        android:onClick="Mapi"/>
+
     <TextView
         android:id="@+id/comprasusu"
         android:layout_width="wrap_content"
